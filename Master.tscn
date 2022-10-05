@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://forest.tscn" type="PackedScene" id=1]
+
+[node name="Master" type="Spatial"]
+
+[node name="EmptyForest" parent="." instance=ExtResource( 1 )]
