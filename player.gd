@@ -24,6 +24,7 @@ var mouseDelta : Vector2 = Vector2()
 onready var camera : Camera = get_node("Camera")
 onready var lamp : Sprite3D = get_node("lamp")
 
+
 func _ready():
 	Engine.set_target_fps(25)
 	run_time = maxrun
@@ -35,7 +36,6 @@ func _input(event):
 	if event is InputEventMouseMotion:
 		mouseDelta = event.relative
 func _process(delta):
-	
 	#Movimento
 	if Input.is_action_pressed("run") and can_run:
 		moveSpeed = maxSpeed * 1.7

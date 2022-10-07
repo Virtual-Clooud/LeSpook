@@ -100,35 +100,34 @@ current = true
 fov = 90.0
 far = 20.0
 
-[node name="lamp" type="Sprite3D" parent="player"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.16063, -0.0393682, -1.3 )
+[node name="lamp" type="Sprite3D" parent="player/Camera"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.16063, -0.539368, -1.3 )
 cast_shadow = 0
 billboard = 1
 shaded = true
 texture = ExtResource( 1 )
 script = ExtResource( 5 )
-l2range = 1
 
-[node name="OmniLight" type="OmniLight" parent="player/lamp"]
-light_color = Color( 0.976471, 0.658824, 0.25098, 1 )
+[node name="SpotLight" type="SpotLight" parent="player/Camera/lamp"]
+light_color = Color( 0.913725, 0.611765, 0.290196, 1 )
 light_energy = 4.0
+shadow_enabled = true
+shadow_reverse_cull_face = true
+spot_range = 8.26419
+spot_angle = 56.4347
+
+[node name="OmniLight" type="OmniLight" parent="player/Camera/lamp"]
+light_color = Color( 0.964706, 0.627451, 0.384314, 1 )
+light_energy = 2.0
 light_indirect_energy = 0.0
 light_specular = 0.0
 light_bake_mode = 0
 shadow_enabled = true
-shadow_color = Color( 0.407843, 0.305882, 0.231373, 1 )
 shadow_bias = 0.2
+omni_range = 14.0
 omni_attenuation = 4.14106
 
-[node name="OmniLight2" type="OmniLight" parent="player/lamp"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.251778, 0 )
-light_color = Color( 1, 0, 0, 1 )
-light_indirect_energy = 0.0
-shadow_enabled = true
-omni_range = 3.0
-omni_attenuation = 1.6245
-
-[node name="Tween" type="Tween" parent="player/lamp"]
+[node name="Tween" type="Tween" parent="player/Camera/lamp"]
 
 [node name="hit_area" type="Area" parent="player"]
 
@@ -154,21 +153,11 @@ __meta__ = {
 }
 
 [node name="observador" type="KinematicBody" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7.22308, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10.7912, 0 )
 script = ExtResource( 4 )
 
 [node name="mesh" type="MeshInstance" parent="observador"]
 mesh = SubResource( 20 )
-
-[node name="SpotLight" type="SpotLight" parent="observador"]
-transform = Transform( 0.999617, -0.0184096, 0.0206442, -0.0207756, -0.00697606, 0.99976, -0.0182612, -0.999806, -0.00735586, 0, 0, 0 )
-light_color = Color( 0.568627, 0.921569, 0.956863, 1 )
-light_energy = 12.0
-shadow_enabled = true
-spot_range = 8.0
-spot_attenuation = 0.6
-spot_angle = 32.0
-spot_angle_attenuation = 1.5
 
 [node name="Timer" type="Timer" parent="observador"]
 

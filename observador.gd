@@ -2,23 +2,28 @@ extends KinematicBody
 
 onready var nav = get_parent()
 
-var path = []
-var path_node = 0
 export var speed = 200
 export var state = 0 #idle, chase, attack
-onready var player = $"../../player"
+var distance
+var pos
+onready var player = get_node("../player/hit_area")
 
 func _physics_process(delta):
-	if path_node < path.size():
-		var direction = (path[path_node] - global_transform.origin)
-		if direction.length() < 1:
-			 path_node += 1
-		else:
-			move_and_slide(direction.normalized() * speed, Vector3.UP)
-func move_to(target_pos):
-	path = nav.get_simple_path(global_transform.origin, target_pos)
-	path_node = 0
-
-
-func _on_Timer_timeout():
-	move_to(player.global_transform.origin)
+	distance = Vector2(to_global(player.get_translation()).z, 
+	to_global(player.get_translation()).x)
+	pos = Vector2(to_global(get_translation()).z, to_global(get_translation()).x)
+	pos.distance_to(distance)
+	print(distance)
+	#Pegar a posição do jogador
+	#Se chegar em certa proximidade ativar modo de perseguição
+#	if distance <= 15:
+#		state = 1
+#	match state:
+#		0:
+#			pass
+#		1:
+#			look_at(player.get_translation(), Vector3.UP)
+#		2:
+#			print("Two are better than one!")
+#
+	pass
