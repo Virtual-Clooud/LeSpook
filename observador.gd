@@ -13,7 +13,6 @@ func _physics_process(delta):
 	to_global(player.get_translation()).x)
 	pos = Vector2(to_global(get_translation()).z, to_global(get_translation()).x)
 	pos.distance_to(distance)
-	print(distance)
 	#Pegar a posição do jogador
 	#Se chegar em certa proximidade ativar modo de perseguição
 #	if distance <= 15:

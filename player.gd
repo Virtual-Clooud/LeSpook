@@ -24,6 +24,7 @@ var mouseDelta : Vector2 = Vector2()
 onready var camera : Camera = get_node("Camera")
 onready var lamp : Sprite3D = get_node("lamp")
 
+#signals
 
 func _ready():
 	Engine.set_target_fps(25)
