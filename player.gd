@@ -1,93 +1,50 @@
-extends KinematicBody
-# stats
-var curHP
-export var maxHP : int = 10
-export var oil : int = 15
+extends Player
 
-# physics
-var can_run = true
-var maxrun = 100
-var run_time
-export var maxSpeed : float = 10.0
-var moveSpeed : float = 5.0
-export var jumpForce : float = 5.0
-export var gravity : float = 12.0
-# cam look
-var minLookAngle : float = -90.0
-var maxLookAngle : float = 90.0
-export var lookSensitivity : float = 10.0
-# vectors
-var vel : Vector3 = Vector3()
-var mouseDelta : Vector2 = Vector2()
+var show_game_over = false
 
-# components
-onready var camera : Camera = get_node("Camera")
-onready var lamp : Sprite3D = get_node("lamp")
-
+#HUD
+onready var sprint_bar = $hud/TextureProgress
+onready var game_over = $hud/game_over
 #signals
+signal im_ded
 
 func _ready():
-	Engine.set_target_fps(25)
-	run_time = maxrun
-	curHP = maxHP
-	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	camera = find_node("Camera")
+#	get_node("../").connect("im_ded", self, "player_ded")
+#	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	#HUD da barra de correr
 	$hud/TextureProgress.set_max(maxrun)
 	$hud/TextureProgress.set_value(run_time)
-func _input(event):
-	if event is InputEventMouseMotion:
-		mouseDelta = event.relative
+
+#Capturar movimento do mouse
 func _process(delta):
+	
 	#Movimento
-	if Input.is_action_pressed("run") and can_run:
-		moveSpeed = maxSpeed * 1.7
-		run_time -= 2
-	if run_time <= 1:
-		can_run = false
-		moveSpeed = maxSpeed
-	if run_time <= (maxrun/ 4):
-		can_run = true
-	if (run_time < 0):
-		run_time = 0
-	if (run_time < maxrun):
-		run_time += 1
+	move(delta)
+	run()
 	$hud/TextureProgress.set_value(run_time)
-	var input = Vector2()
-	if Input.is_action_pressed("frente"):
-		input.y -= 1
-	if Input.is_action_pressed("tras"):
-		input.y += 1
-	if Input.is_action_pressed("direita"):
-		input.x += 1
-	if Input.is_action_pressed("esquerda"):
-		input.x -= 1
-	if input.x != 0 or input.y != 0:
-		if moveSpeed <= maxSpeed:
-			moveSpeed = lerp(moveSpeed, maxSpeed, 0.1)
-		camera.fov = lerp(camera.fov,92, 0.1)
-	if input.x == 0 and input.y == 0:
-		camera.fov = lerp(camera.fov,90, 0.05)
-		if moveSpeed > 0:
-			moveSpeed = lerp(moveSpeed, 0, 0.05)
-	input = input.normalized()
-	var forward = global_transform.basis.z
-	var right = global_transform.basis.x
-	var relativeDir = (forward * input.y + right * input.x)
-	# set the velocity
-	var speedx = relativeDir.x * moveSpeed
-	var speedz = relativeDir.z * moveSpeed
-	vel.x = relativeDir.x * moveSpeed
-	vel.z = relativeDir.z * moveSpeed
-	# apply gravity
-	vel.y -= gravity * delta
-	# move the player
-	move_and_slide(vel, Vector3.UP)
 	#Camera
-	# rotate the camera along the x axis
-	camera.rotation_degrees.x -= mouseDelta.y * lookSensitivity * delta
-	# clamp camera x rotation axis
-	camera.rotation_degrees.x = clamp(camera.rotation_degrees.x, 
-	minLookAngle, maxLookAngle)
-	# rotate the player along their y-axis
-	rotation_degrees.y -= mouseDelta.x * lookSensitivity * delta
-	# reset the mouseDelta vector
-	mouseDelta = Vector2()
+	first_person_camera(delta, null)
+	if vel.x != 0:
+		$view_bob.play("view_bob")
+		$Camera/lamp/lamp_anim.play("lamp_bob")
+	else:
+		$view_bob.stop()
+		$Camera/lamp/lamp_anim.stop()
+	
+	if show_game_over:
+		can_look = false
+		game_over.set_visible(true)
+		$Camera/lamp.set_visible(false)
+		camera.rotation_degrees = lerp(camera.rotation_degrees, Vector3(90,0,0), 0.1)
+		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+func on_skull_kill():
+	print("Skull Killed")
+	show_game_over = true
+func on_angel_kill():
+	print("Angel Killed")
+	show_game_over = true
+
+func _on_reset_pressed():
+	emit_signal("im_ded")
+	print("Playerpressed")

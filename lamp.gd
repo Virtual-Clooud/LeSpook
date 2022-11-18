@@ -15,7 +15,7 @@ func _physics_process(delta):
 	if Input.is_action_just_pressed("lamp") and can_light == true and rad.omni_range == l1range:
 		$Tween.interpolate_property(rad, "omni_range",
 		rad.omni_range, maxlight, 1.3,
-		Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+		Tween.TRANS_LINEAR, Tween.EASE_IN)
 		$Tween.start()
 		can_light = false
 		emit_signal("fuckoff")
@@ -23,5 +23,5 @@ func _physics_process(delta):
 		can_light = true
 		$Tween.interpolate_property(rad, "omni_range",
 		rad.omni_range, l1range, 2,
-		Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+		Tween.TRANS_LINEAR, Tween.EASE_IN)
 		$Tween.start()

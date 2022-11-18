@@ -2,8 +2,8 @@
 
 importer="texture"
 type="StreamTexture"
-path.s3tc="res://.import/espreitador.png-58a00252eac76b789ff43fc980d58aff.s3tc.stex"
-path.etc="res://.import/espreitador.png-58a00252eac76b789ff43fc980d58aff.etc.stex"
+path.s3tc="res://.import/arvore2.png-fff02fb18c0c11e85f08e096e6a59297.s3tc.stex"
+path.etc="res://.import/arvore2.png-fff02fb18c0c11e85f08e096e6a59297.etc.stex"
 metadata={
 "imported_formats": [ "s3tc", "etc" ],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://Assets/Visual/espreitador.png"
-dest_files=[ "res://.import/espreitador.png-58a00252eac76b789ff43fc980d58aff.s3tc.stex", "res://.import/espreitador.png-58a00252eac76b789ff43fc980d58aff.etc.stex" ]
+source_file="res://Assets/Visual/arvore2.png"
+dest_files=[ "res://.import/arvore2.png-fff02fb18c0c11e85f08e096e6a59297.s3tc.stex", "res://.import/arvore2.png-fff02fb18c0c11e85f08e096e6a59297.etc.stex" ]
 
 [params]
 
@@ -21,9 +21,9 @@ compress/lossy_quality=0.7
 compress/hdr_mode=0
 compress/bptc_ldr=0
 compress/normal_map=0
-flags/repeat=1
-flags/filter=false
-flags/mipmaps=false
+flags/repeat=true
+flags/filter=true
+flags/mipmaps=true
 flags/anisotropic=false
 flags/srgb=2
 process/fix_alpha_border=true

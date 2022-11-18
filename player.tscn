@@ -1,0 +1,224 @@
+[gd_scene load_steps=12 format=2]
+
+[ext_resource path="res://Assets/Scripts/player.gd" type="Script" id=1]
+[ext_resource path="res://Assets/Scripts/lamp.gd" type="Script" id=2]
+[ext_resource path="res://Assets/Visual/foresmood.tres" type="Environment" id=3]
+[ext_resource path="res://icon.png" type="Texture" id=4]
+[ext_resource path="res://Assets/Visual/mao.png" type="Texture" id=5]
+
+[sub_resource type="BoxShape" id=11]
+extents = Vector3( 0.201862, 0.326022, 0.327914 )
+
+[sub_resource type="Animation" id=31]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("Camera/lamp:translation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( 1.15, -0.5, -1.3 ) ]
+}
+
+[sub_resource type="Animation" id=32]
+resource_name = "lamp_bob"
+length = 0.5
+loop = true
+step = 0.02
+tracks/0/type = "value"
+tracks/0/path = NodePath("Camera/lamp:translation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.14, 0.24, 0.38, 0.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector3( 1.15, -0.5, -1.3 ), Vector3( 1.1, -0.45, -1.3 ), Vector3( 1.15, -0.5, -1.3 ), Vector3( 1.2, -0.45, -1.3 ), Vector3( 1.15, -0.5, -1.3 ) ]
+}
+
+[sub_resource type="CapsuleShape" id=1]
+radius = 0.342157
+height = 0.552877
+
+[sub_resource type="Animation" id=29]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("Camera:translation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0.5, 0 ) ]
+}
+
+[sub_resource type="Animation" id=30]
+resource_name = "view_bob"
+length = 0.5
+loop = true
+step = 0.01
+tracks/0/type = "value"
+tracks/0/path = NodePath("Camera:translation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.12, 0.25, 0.38, 0.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0.5, 0 ), Vector3( 0.2, 0.7, 0 ), Vector3( 0, 0.5, 0 ), Vector3( -0.2, 0.7, 0 ), Vector3( 0, 0.5, 0 ) ]
+}
+
+[node name="player" type="KinematicBody"]
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 2.99012, 0.865954, 0.42545 )
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="hud" type="Control" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="TextureProgress" type="TextureProgress" parent="hud"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -320.0
+margin_top = 228.0
+margin_right = -256.0
+margin_bottom = 292.0
+rect_scale = Vector2( 10, 1 )
+step = 0.5
+texture_under = ExtResource( 4 )
+texture_over = ExtResource( 4 )
+texture_progress = ExtResource( 4 )
+fill_mode = 6
+tint_under = Color( 1, 0, 0, 1 )
+tint_over = Color( 0.745098, 0.658824, 0.658824, 0 )
+tint_progress = Color( 0, 0.0862745, 1, 1 )
+
+[node name="game_over" type="Control" parent="hud"]
+visible = false
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -20.0
+margin_top = -20.0
+margin_right = 20.0
+margin_bottom = 20.0
+
+[node name="Panel" type="Panel" parent="hud/game_over"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -152.0
+margin_top = -144.0
+margin_right = 152.0
+margin_bottom = 144.0
+
+[node name="reset" type="Button" parent="hud/game_over/Panel"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -22.5
+margin_top = -60.0
+margin_right = 22.5
+margin_bottom = -40.0
+text = "Retry"
+
+[node name="quit" type="Button" parent="hud/game_over/Panel"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -20.0
+margin_top = 68.0
+margin_right = 20.0
+margin_bottom = 88.0
+text = "Quit"
+
+[node name="Label" type="Label" parent="hud/game_over"]
+margin_left = -20.0
+margin_top = -104.0
+margin_right = 62.0
+margin_bottom = -90.0
+text = "You Died m8"
+align = 1
+valign = 1
+
+[node name="CollisionShape" type="CollisionShape" parent="."]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0 )
+shape = SubResource( 11 )
+
+[node name="Camera" type="Camera" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0 )
+environment = ExtResource( 3 )
+doppler_tracking = 2
+current = true
+fov = 90.0
+far = 300.0
+
+[node name="lamp" type="Sprite3D" parent="Camera"]
+transform = Transform( 0.5, 0, 0, 0, 0.5, 0, 0, 0, 1, 1.15, -0.5, -1.3 )
+cast_shadow = 0
+offset = Vector2( 30, -100 )
+flip_h = true
+billboard = 1
+shaded = true
+texture = ExtResource( 5 )
+script = ExtResource( 2 )
+
+[node name="SpotLight" type="SpotLight" parent="Camera/lamp"]
+light_color = Color( 0.913725, 0.611765, 0.290196, 1 )
+light_energy = 4.0
+shadow_reverse_cull_face = true
+spot_range = 30.0
+spot_angle = 30.0
+
+[node name="OmniLight" type="OmniLight" parent="Camera/lamp"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.695627, 0.30064, 0.35483 )
+light_color = Color( 0.964706, 0.627451, 0.384314, 1 )
+light_energy = 2.0
+light_indirect_energy = 0.0
+light_specular = 0.0
+light_bake_mode = 0
+shadow_enabled = true
+shadow_bias = 0.2
+omni_range = 14.0
+omni_attenuation = 4.14106
+
+[node name="Tween" type="Tween" parent="Camera/lamp"]
+
+[node name="lamp_anim" type="AnimationPlayer" parent="Camera/lamp"]
+root_node = NodePath("../../..")
+playback_speed = 0.5
+anims/RESET = SubResource( 31 )
+anims/lamp_bob = SubResource( 32 )
+
+[node name="hit_area" type="Area" parent="." groups=["player"]]
+
+[node name="CollisionShape2" type="CollisionShape" parent="hit_area"]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0 )
+shape = SubResource( 1 )
+
+[node name="view_bob" type="AnimationPlayer" parent="."]
+playback_speed = 0.5
+anims/RESET = SubResource( 29 )
+anims/view_bob = SubResource( 30 )
+
+[connection signal="pressed" from="hud/game_over/Panel/reset" to="." method="_on_reset_pressed"]
